@@ -10,7 +10,7 @@
   /*Defines SymTable_T as a pointer to a struct SymTable.*/
   typedef struct SymTable *SymTable_T;
   
-  /*Initializes a new SymTable.*/
+  /*Initializes a new SymTable then returns a pointer to it.*/
   SymTable_T SymTable_new(void);
 
    /*Frees SymTable pointed to by oSymTable and all of its keys. Values are not freed, as they are managed
@@ -25,7 +25,7 @@
   int SymTable_put(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue);
 
-   /*Replaces the value of pcKey in SymTable with a value of pvValue, then returns
+   /*Replaces the value of pcKey in oSymTable with a value of pvValue, then returns
    the original value that was replaced. Returns NULL if pcKey is not found.*/
   void *SymTable_replace(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue);
@@ -34,7 +34,7 @@
    and returns 0 if it is not found.*/
   int SymTable_contains(SymTable_T oSymTable, const char *pcKey);
 
-   /*Gets pvValue of the listing with key pcKey, then returns it. If it
+   /*Gets pvValue of the listing in oSymTable with key pcKey, then returns it. If it
    is not found, returns NULL.*/
   void *SymTable_get(SymTable_T oSymTable, const char *pcKey);
 
