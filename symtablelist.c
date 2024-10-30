@@ -1,7 +1,7 @@
 #include "symtable.h"
 struct Node {
     const char* pcKey;
-    void* pvValue;
+    const void* pvValue;
     struct Node* next;
 };
 
