@@ -26,7 +26,7 @@ void SymTable_free(SymTable_T oSymTable) {
     assert(oSymTable != NULL);
     for(curNode = oSymTable->firstNode; curNode != NULL; curNode = nextNode) {
         nextNode = curNode->next;
-        free(curNode->pcKey);
+        free((char*) curNode->pcKey);
         free(curNode);
     }
     free(oSymTable);
@@ -50,7 +50,7 @@ void* SymTable_get(SymTable_T oSymTable, const char *pcKey) {
     assert(pcKey != NULL);
     for(toSearch = oSymTable->firstNode; toSearch != NULL; toSearch = toSearch->next) {
         if(!strcmp(toSearch->pcKey, pcKey)) {
-            return toSearch->pvValue;
+            return (void*)toSearch->pvValue;
         }
     }
     return NULL;
@@ -75,7 +75,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
         oSymTable->length++;
         return 1;
     }
-    free(newNode->pcKey);
+    free((char*)newNode->pcKey);
     free(newNode);
     return 0;
 }
@@ -98,8 +98,8 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
             } else {
                 prev->next = toSearch->next;
             }
-            toReturn = toSearch->pvValue;
-            free(toSearch->pcKey);
+            toReturn = (void*) toSearch->pvValue;
+            free((char*) toSearch->pcKey);
             free(toSearch);
             oSymTable->length--;
             return(toReturn);
@@ -116,7 +116,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
     assert(pcKey != NULL);
     for(toSearch = oSymTable->firstNode; toSearch != NULL; toSearch = toSearch->next) {
         if(!strcmp(toSearch->pcKey, pcKey)) {
-            toReturn = toSearch->pvValue;
+            toReturn = (void*) toSearch->pvValue;
             toSearch->pvValue = pvValue;
             return toReturn;
         }
@@ -131,6 +131,6 @@ void SymTable_map(SymTable_T oSymTable,
         assert(oSymTable != NULL);
         assert(pfApply != NULL);
         for(cur = oSymTable->firstNode; cur != NULL; cur = cur->next) {
-            pfApply(cur->pcKey, cur->pvValue, pvExtra);
+            pfApply(cur->pcKey, (void*)cur->pvValue, (void*)pvExtra);
         }
      }
