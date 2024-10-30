@@ -1,6 +1,6 @@
 #include "symtable.h"
 struct Node {
-    char* pcKey;
+    const char* pcKey;
     void* pvValue;
     struct Node* next;
 };
