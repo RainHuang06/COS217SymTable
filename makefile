@@ -1,5 +1,5 @@
 # Dependency rules for non-file targets
-all: testsymtable
+all: testsymtablelist
 clobber: clean
 	rm -f *~ \#*\#
 clean: rm -f testsymtable *.o 
