@@ -1,3 +1,4 @@
+/*Author: Rain Huang*/
 #include "symtable.h"
 struct Node {
     const char* pcKey;
@@ -24,8 +25,8 @@ void SymTable_free(SymTable_T oSymTable) {
     struct Node *curNode;
     struct Node *nextNode;
     assert(oSymTable != NULL);
-    for(curNode = oSymTable->firstNode; curNode != NULL; curNode = nextNode) {
-        nextNode = curNode->next;
+    for(curNode = oSymTable->firstNode; curNode != NULL; curNode = nextNode) { 
+        nextNode = curNode->next; /*Iteratively free every node*/
         free((char*) curNode->pcKey);
         free(curNode);
     }
@@ -68,7 +69,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
     strcpy((char*)newNode->pcKey, pcKey); /*key protection*/
     newNode->pvValue = pvValue;
     if(!SymTable_contains(oSymTable, pcKey)) {
-        newNode->next = oSymTable->firstNode; 
+        newNode->next = oSymTable->firstNode; /*Insertion*/
         oSymTable->firstNode = newNode;
         oSymTable->length++;
         return 1; /*success*/
@@ -92,12 +93,12 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
     for(toSearch = oSymTable->firstNode; toSearch != NULL; toSearch = toSearch->next) {
         if(!strcmp(toSearch->pcKey, pcKey)) {
             if(prev == NULL) {
-                oSymTable->firstNode = toSearch->next;
+                oSymTable->firstNode = toSearch->next; /*Handles case if the first element is removed*/
             } else {
                 prev->next = toSearch->next;
             }
             toReturn = (void*) toSearch->pvValue;
-            free((char*) toSearch->pcKey);
+            free((char*) toSearch->pcKey); /*Don't forget to free the key!*/
             free(toSearch);
             oSymTable->length--;
             return(toReturn);
