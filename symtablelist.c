@@ -1,14 +1,16 @@
 /*Author: Rain Huang*/
 #include "symtable.h"
+/*Node of linked list representing table entry*/
 struct Node {
-    const char* pcKey;
-    const void* pvValue;
-    struct Node* next;
+    const char* pcKey; /*Key of entry*/
+    const void* pvValue; /*Value of entry*/
+    struct Node* next; /*Next node in linked list*/
 };
 
+/*Defines the table*/
 struct SymTable {
-    size_t length;
-    struct Node* firstNode;
+    size_t length; /*Size of table - how many entries*/
+    struct Node* firstNode; /*Stores first linked list node*/
 };
 
 SymTable_T SymTable_new() {
@@ -130,6 +132,6 @@ void SymTable_map(SymTable_T oSymTable,
         assert(oSymTable != NULL);
         assert(pfApply != NULL);
         for(cur = oSymTable->firstNode; cur != NULL; cur = cur->next) {
-            pfApply(cur->pcKey, (void*)cur->pvValue, (void*)pvExtra);
+            (*pfApply)(cur->pcKey, (void*)cur->pvValue, (void*)pvExtra);
         }
      }
