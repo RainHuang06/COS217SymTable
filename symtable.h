@@ -30,7 +30,7 @@
   void *SymTable_replace(SymTable_T oSymTable,
      const char *pcKey, const void *pvValue);
 
-   /*Searches for a SymTable listing with key pcKey. If it is found, return 1
+   /*Searches for a oSymTable listing with key pcKey. If it is found, return 1
    and returns 0 if it is not found.*/
   int SymTable_contains(SymTable_T oSymTable, const char *pcKey);
 
